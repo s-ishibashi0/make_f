@@ -16,7 +16,7 @@ public class Teacher implements java.io.Serializable{
 		return login;
 	}
 
-	public void setID(String id) {
+	public void setId(String id) {
 		this.id=id;
 	}
 	public void setLogin(String login) {
