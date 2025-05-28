@@ -5,8 +5,25 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style>
+	.header {
+		background-color: #ADD8E6;
+	}
+</style>
 </head>
 <body>
+<div class = header>
+	<h1>得点管理システム</h1>
+	<%
+    	String loggedInUser = (String) session.getAttribute("userName");
+	%>
 
+	<span>
+    	<%= loggedInUser != null ? loggedInUser +"様" : "" %>
+	</span>
+	<%if (loggedInUser != null) { %>
+		<a href="git/scoremanager/main/logout.jsp">ログアウト</a>
+	<% } %>
+</div>
 </body>
 </html>
