@@ -21,6 +21,8 @@ System.out.println("1");
             TeacherDAO dao = new TeacherDAO();
             Teacher teacher = dao.search(id, password);
 System.out.println("2");
+System.out.println("id:" + id);
+System.out.println("pass: " + password);
 
             if (teacher != null) {
                 // 認証成功 → セッションに保存してホームへ

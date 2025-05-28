@@ -22,8 +22,8 @@
 	<label for="id">ログインID</label><br />
 	<input type="text"
 		id="id"
-		name="login"
-		value="${login}"
+		name="id"
+		value="${id}"
 		placeholder="半角でご入力ください"
 		style="ime-mode: disabled;"
 		required maxlength="10" /><br /><br />
