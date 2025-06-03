@@ -14,13 +14,13 @@ public class LoginExecuteAction implements Action {
             // フォームから送られたパラメータを取得（IDは文字列として扱う）
             String id = req.getParameter("id");
             String password = req.getParameter("password");
-System.out.println("1");
+
 
 
             // DAOで認証チェック
             TeacherDAO dao = new TeacherDAO();
             Teacher teacher = dao.search(id, password);
-System.out.println("2");
+
 System.out.println("id:" + id);
 System.out.println("pass: " + password);
 
@@ -28,7 +28,7 @@ System.out.println("pass: " + password);
                 // 認証成功 → セッションに保存してホームへ
                 HttpSession session = req.getSession();
                 session.setAttribute("teacher", teacher);
-System.out.println("3");
+
                 return "main/menu.jsp";
             } else {
                 // 認証失敗 → エラーメッセージ設定してエラーページへ
