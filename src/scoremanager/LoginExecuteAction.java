@@ -28,8 +28,9 @@ System.out.println("pass: " + password);
                 // 認証成功 → セッションに保存してホームへ
                 HttpSession session = req.getSession();
                 session.setAttribute("teacher", teacher);
+                res.sendRedirect(req.getContextPath() + "/scoremanager/main/menu.jsp");
+                return null;
 
-                return "main/menu.jsp";
             } else {
                 // 認証失敗 → エラーメッセージ設定してエラーページへ
                 req.setAttribute("error", "ログインIDまたはパスワードが違います。");
