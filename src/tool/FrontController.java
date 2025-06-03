@@ -24,20 +24,35 @@ public class FrontController extends HttpServlet {
 
         try {
             // ① リクエストされたURLのパスを取得
-            String path = request.getServletPath(); // e.g., "/LoginExecute.action"
+            String path = request.getServletPath(); // 例: "/LoginExecute.action"
             System.out.println("リクエストパス : " + path);
 
             // ② 拡張子とスラッシュを除去し、アクションクラス名を構築
             String className = path.substring(path.lastIndexOf('/') + 1, path.lastIndexOf(".action"));
-            // e.g., "LoginExecute"
+            // 例: "LoginExecute"
 
-            String fullClassName = "scoremanager." + className + "Action";
-            System.out.println("アクションクラス名 : " + fullClassName);
+            // ③ 複数のパッケージ候補を順に試す
+            String[] basePackages = {
+                "scoremanager.main.",
+                "scoremanager."
+            };
 
-            // ③ クラスを動的にロードしてインスタンス生成
-            Action action = (Action) Class.forName(fullClassName).getDeclaredConstructor().newInstance();
+            Class<?> clazz = null;
+            for (String base : basePackages) {
+                try {
+                    clazz = Class.forName(base + className + "Action");
+                    break; // 成功したらループを抜ける
+                } catch (ClassNotFoundException e) {
+                    // 無視して次の候補へ
+                }
+            }
 
-            // ④ アクションクラスの execute() を呼び出してURL取得
+            if (clazz == null) {
+                throw new ClassNotFoundException("アクションクラスが見つかりません: " + className + "Action");
+            }
+
+            // ④ クラスをインスタンス化して execute を呼び出す
+            Action action = (Action) clazz.getDeclaredConstructor().newInstance();
             String url = action.execute(request, response);
 
             // ⑤ 指定されたURLへフォワード

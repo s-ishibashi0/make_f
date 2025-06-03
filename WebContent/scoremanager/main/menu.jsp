@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:import url="../../base.jsp" />
 <h2>メニュー</h2>
-<a href="student_list.jsp">学生管理</a>
+<a href="main/StudentList.action">学生管理</a>
 <div>
 	<p>成績管理</p>
 	<a href="test_list.jsp">成績登録</a>
