@@ -9,4 +9,5 @@
 	<a href="test_list.jsp">成績登録</a>
 	<a href="test_list_student.jsp">成績参照</a>
 	<a href="subject_list.jsp">科目管理</a>
+	<a href="Logout.action">ログアウト</a>
 </div>

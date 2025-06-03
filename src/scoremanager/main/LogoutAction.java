@@ -2,13 +2,21 @@ package scoremanager.main;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import tool.Action;
 
-public class LogoutAction extends Action {
+public class LogoutAction implements Action {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		// ログイン処理のロジックをここに書く
-		return ".jsp";
+
+		HttpSession session=req.getSession();
+
+		if (session.getAttribute("teacher")!=null) {
+			session.removeAttribute("teacher");
+			return "logout.jsp";
+		}
+
+		return "error.jsp";
 	}
 }
