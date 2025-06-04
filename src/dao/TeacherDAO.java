@@ -12,7 +12,7 @@ public class TeacherDAO extends DAO {
 
         try (Connection con = getConnection();
              PreparedStatement st = con.prepareStatement(
-                "select * from teacher where id=? and password=?")) {
+                 "SELECT ID, PASSWORD, SCHOOL_CD FROM TEACHER WHERE ID=? AND PASSWORD=?")) {
 
             st.setString(1, id);
             st.setString(2, password);
@@ -21,8 +21,8 @@ public class TeacherDAO extends DAO {
                 if (rs.next()) {
                     teacher = new Teacher();
                     teacher.setId(rs.getString("id"));
-//                    teacher.setLogin(rs.getString("login"));
                     teacher.setPassword(rs.getString("password"));
+                    teacher.setSchool(rs.getString("school_cd")); // ★ 学校コードをセット
                 }
             }
         }
