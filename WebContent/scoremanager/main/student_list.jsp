@@ -84,6 +84,9 @@
 		</c:when>
 		<c:otherwise>
 			<div>学生情報が存在しませんでした</div>
+			<div>検索条件: 入学年度=${f1}, クラス=${f2}, 在学中=${f3}</div>
+			<div>フォーム送信値: f1=${param.f1}, f2=${param.f2}, f3=${param.f3}</div>
+
 		</c:otherwise>
 	</c:choose>
 </section>

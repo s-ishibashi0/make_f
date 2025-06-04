@@ -67,9 +67,10 @@ public class StudentListAction implements Action {
         }
 
         // 出席情報のパース
-        if (isAttendStr != null && !isAttendStr.isEmpty()) {
-            isAttend = Boolean.parseBoolean(isAttendStr);
+        if ("t".equals(isAttendStr)) {
+            isAttend = true;
         }
+
 
         // 学生リストの取得ロジック
         if (entYear != 0 && !classNum.equals("0")) {
