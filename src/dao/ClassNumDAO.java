@@ -39,18 +39,24 @@ public class ClassNumDAO extends DAO {
 
     // filter (学校コードに関連するすべてのクラス番号を取得)
     public List<String> filter(School school) throws Exception {
+    	System.out.println("filterは動いてます");
+    	System.out.println(school.getName());
         List<String> classNums = new ArrayList<>();
         String sql = "SELECT CLASS_NUM FROM CLASS_NUM WHERE SCHOOL_CD = ?";
 
         try (Connection con = getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
+        	System.out.println("tryのなか");
 
             ps.setString(1, school.getCd());
             ResultSet rs = ps.executeQuery();
-
+            System.out.println(rs);
+            System.out.println("while直前");
             while (rs.next()) {
                 classNums.add(rs.getString("CLASS_NUM"));
+                System.out.println("クラス番号のデータ取得完了");
             }
+            System.out.println("whileの直後");
         }
 
         return classNums;

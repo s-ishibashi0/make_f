@@ -24,6 +24,9 @@ public class StudentListAction implements Action {
         HttpSession session = request.getSession();
         Teacher teacher = (Teacher) session.getAttribute("teacher");
 
+        System.out.println("teacher: " + teacher);
+        System.out.println("teacher.getSchool(): " + teacher.getSchool());
+
         String entYearStr = request.getParameter("f1");
         String classNum = request.getParameter("f2");
         String isAttendStr = request.getParameter("f3");
@@ -48,6 +51,8 @@ public class StudentListAction implements Action {
         // Schoolオブジェクトを作成
         School school = new School();
         school.setCd(teacher.getSchool());
+
+        System.out.println("学校コード: " + school.getCd());
 
         // クラス番号一覧を取得
         List<String> classNumList = cNumDao.filter(school);
