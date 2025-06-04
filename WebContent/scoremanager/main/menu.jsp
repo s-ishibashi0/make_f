@@ -5,9 +5,9 @@
 <h2>メニュー</h2>
 <a href="main/StudentList.action">学生管理</a>
 <div>
-	<p>成績管理</p>
-	<a href="TestRegist.action">成績登録</a>
-	<a href="test_list_student.jsp">成績参照</a>
-	<a href="main/SubjectList.action">科目管理</a>
-	<a href="Logout.action">ログアウト</a>
+<p>成績管理</p>
+<a href="test_list.jsp">成績登録</a>
+<a href="test_list_student.jsp">成績参照</a>
+<a href="main/SubjectList.action">科目管理</a>
+<a href="Logout.action">ログアウト</a>
 </div>
