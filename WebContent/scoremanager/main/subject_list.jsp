@@ -10,7 +10,7 @@
 </head>
 <body>
     <h2>科目管理</h2>
-    <a href="subjectForm.jsp">新規登録</a>
+    <a href="${pageContext.request.contextPath}/scoremanager/main/SubjectCreate.action">新規登録</a>
     <br><br>
 
     <!-- 件数チェック表示 -->
@@ -31,12 +31,11 @@
                 <td>${subject.cd}</td>
                 <td>${subject.name}</td>
                 <td>
-                    <a href="subjectForm.jsp?code=${subject.cd}">変更</a>
-                    <a href="deleteSubject?code=${subject.cd}">削除</a>
+                    <a href="${pageContext.request.contextPath}/scoremanager/main/subjectForm.jsp?code=${subject.cd}">変更</a>
+                    <a href="${pageContext.request.contextPath}/scoremanager/main/deleteSubject?code=${subject.cd}">削除</a>
                 </td>
             </tr>
         </c:forEach>
     </table>
-
 </body>
 </html>

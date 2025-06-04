@@ -28,7 +28,7 @@ public class SubjectListAction implements Action {
         req.setAttribute("subjectList", subjectList);
 
         System.out.println("SubjectListAction.execute()終了");
-        // ここを絶対パスに変更
+        // フロントコントローラが絶対パスでforwardする場合は、先頭にスラッシュをつける
         return "/scoremanager/main/subject_list.jsp";
     }
 }
