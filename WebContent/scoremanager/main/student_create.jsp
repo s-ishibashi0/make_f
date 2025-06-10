@@ -39,6 +39,6 @@
     <button type="submit" name="end">登録して終了</button>
   </form>
   <br/>
-  <a href="/make_f/WebContent/scoremanager/main/student_list.jsp">学生管理一覧へ戻る</a>
+  <a href="/Team_F/scoremanager/main/student_list.jsp">学生管理一覧へ戻る</a>
 
 </div>

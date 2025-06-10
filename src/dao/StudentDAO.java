@@ -105,5 +105,45 @@ public class StudentDAO extends DAO {
 
 		return students;
 	}
+	// 学生番号で1人の学生情報を取得
+	public Student get(String no) throws Exception {
+	    String sql = "SELECT NO, NAME, ENT_YEAR, CLASS_NUM, IS_ATTEND, SCHOOL_CD FROM STUDENT WHERE NO = ?";
+	    Student student = null;
 
+	    try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setString(1, no);
+	        ResultSet rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            student = new Student();
+	            student.setNo(rs.getString("no"));
+	            student.setName(rs.getString("name"));
+	            student.setEntYear(rs.getInt("ent_year"));
+	            student.setClassNum(rs.getString("class_num"));
+	            student.setAttend(rs.getBoolean("is_attend"));
+
+	            // 学校情報は別途取得する必要がある場合があります
+	            School school = new School();
+	            school.setCd(rs.getString("school_cd"));
+	            student.setSchool(school);
+	        }
+	    }
+
+	    return student;
+	}
+	// update (学生情報を更新)
+	public boolean update(Student student) throws Exception {
+	    String sql = "UPDATE STUDENT SET NAME = ?, ENT_YEAR = ?, CLASS_NUM = ?, IS_ATTEND = ? WHERE NO = ?";
+
+	    try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setString(1, student.getName());
+	        ps.setInt(2, student.getEntYear());
+	        ps.setString(3, student.getClassNum());
+	        ps.setBoolean(4, student.isAttend());
+	        ps.setString(5, student.getNo());
+
+	        int rowsAffected = ps.executeUpdate();
+	        return rowsAffected > 0; // 1件以上更新できた場合は true
+	    }
+	}
 }
