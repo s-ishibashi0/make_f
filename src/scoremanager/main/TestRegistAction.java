@@ -11,10 +11,13 @@ import javax.servlet.http.HttpSession;
 
 import bean.School;
 import bean.Student;
+import bean.Subject;
 import bean.Teacher;
 import dao.ClassNumDAO;
 import dao.StudentDAO;
+import dao.SubjectDAO;
 import tool.Action;
+
 
 public class TestRegistAction implements Action {
 
@@ -22,6 +25,10 @@ public class TestRegistAction implements Action {
 		    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		        HttpSession session = request.getSession();
 		        Teacher teacher = (Teacher) session.getAttribute("teacher");
+
+		        SubjectDAO subjectDao = new SubjectDAO();
+		        List<Subject> subjectList = subjectDao.filter(); // ← 科目一覧を取得
+		        request.setAttribute("subjectList", subjectList); // JSPへ渡す
 
 		        System.out.println("teacher: " + teacher);
 		        System.out.println("teacher.getSchool(): " + teacher.getSchool());
