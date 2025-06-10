@@ -31,7 +31,8 @@
                 <td>${subject.cd}</td>
                 <td>${subject.name}</td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/scoremanager/main/subjectForm.jsp?code=${subject.cd}">変更</a>
+                    <a href="${pageContext.request.contextPath}/scoremanager/main/SubjectUpdate.action?code=${subject.cd}">変更</a>
+
                     <a href="${pageContext.request.contextPath}/scoremanager/main/deleteSubject?code=${subject.cd}">削除</a>
                 </td>
             </tr>
