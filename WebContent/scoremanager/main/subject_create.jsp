@@ -12,7 +12,7 @@
     <p style="color:red">${errorMsg}</p>
   </c:if>
 
-  <form action="${pageContext.request.contextPath}/scoremanager/main/SubjectCreate.action" method="post">
+  <form action="${pageContext.request.contextPath}/scoremanager/main/SubjectCreateExecute.action" method="post">
 
     <label for="cd">科目コード</label><br>
     <input
