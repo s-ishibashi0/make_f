@@ -8,8 +8,7 @@
   <h2>学生情報登録画面</h2>
 
   <!-- 登録フォーム -->
-  <form action="StudentCreateExecuteAction" method="post">
-
+<form action="StudentCreateExecute.action" method="post">
     <label for="ent_year">入学年度</label><br/>
     <select name="ent_year" id="ent_year" required>
       <c:forEach var="year" items="${entYearList}">
@@ -37,11 +36,9 @@
       </c:forEach>
     </select>
     <br/><br/>
-
     <button type="submit" name="end">登録して終了</button>
   </form>
-
   <br/>
-  <a href="studentList.jsp">学生管理一覧へ戻る</a>
+  <a href="/make_f/WebContent/scoremanager/main/student_list.jsp">学生管理一覧へ戻る</a>
 
 </div>
