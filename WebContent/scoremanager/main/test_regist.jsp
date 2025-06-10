@@ -5,7 +5,7 @@
 
 <section class="me-4">
 	<h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">成績管理</h2>
-	<form method="get">
+	<form method="get" action="StudentList.action">
 		<div class="row border mx-3 mb-3 py-2 align-items-center rounded"
 			id="filter">
 			<div class="col-4">
@@ -41,16 +41,66 @@
 			</div>
 
 			<div class="col-4">
-				<label class="form-label" for="student-f4-select">回数</label> <select
+				<label class="form-label" for="student-f4-select">テスト回数</label> <select
 					class="form-select" id="student-f4-select" name="f4">
 					<option value="0">--------</option>
-					<c:forEach var="num" items="${students}">
-						<option value="${num}" <c:if test="${num == f2}">selected</c:if>>${num}</option>
+					<c:forEach var="num" items="${test_no_list}">
+						<option value="${num}" <c:if test="${f4 == num}">selected</c:if>>${num}</option>
 					</c:forEach>
 				</select>
+				<c:if test="${errors.f4 != null}">
+					<span class="text-danger">${errors.f4}</span>
+				</c:if>
 			</div>
 
+
+			<div class="col-2 text-center">
+				<button type="submit" class="btn btn-secondary" id="filter-button">検索</button>
+			</div>
+
+			<div class="mt-2 text-warning">${errors.get("f1")}</div>
 		</div>
 	</form>
+
+	<c:choose>
+		<c:when test="${students.size() > 0}">
+			<div>検索結果：${students.size()}件</div>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>入学年度</th>
+						<th>学生番号</th>
+						<th>氏名</th>
+						<th>クラス</th>
+						<th class="text-center">在学中</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="student" items="${students}">
+						<tr>
+							<td>${entYear}</td>
+							<td>${test.no}</td>
+							<td>${student.name}</td>
+							<td>${student.classNum}</td>
+							<td class="text-center"><c:choose>
+									<c:when test="${student.isAttend()}">○</c:when>
+									<c:otherwise>✕</c:otherwise>
+								</c:choose></td>
+							<td><a href="StudentUpdate.action?no=${student.no}">変更</a></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</c:when>
+		<c:otherwise>
+			<div>学生情報が存在しませんでした</div>
+
+		</c:otherwise>
+	</c:choose>
+
+
+
 </section>
 
