@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<c:import url="../../base.jsp" />
+
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+    <title>科目管理 - 削除完了</title>
 </head>
 <body>
+    <h2>科目管理</h2>
 
+    <p>科目の削除が完了しました。</p>
+
+    <a href="${pageContext.request.contextPath}/scoremanager/main/SubjectList.action">科目一覧へ戻る</a>
 </body>
 </html>
