@@ -26,9 +26,14 @@ public class TestRegistAction implements Action {
 		        HttpSession session = request.getSession();
 		        Teacher teacher = (Teacher) session.getAttribute("teacher");
 
+		        School school = new School();
+		        school.setCd(teacher.getSchool());
+
 		        SubjectDAO subjectDao = new SubjectDAO();
-		        List<Subject> subjectList = subjectDao.filter(); // ← 科目一覧を取得
+		        List<Subject> subjectList = subjectDao.filter(school); // ← OK
 		        request.setAttribute("subjectList", subjectList); // JSPへ渡す
+
+
 
 		        System.out.println("teacher: " + teacher);
 		        System.out.println("teacher.getSchool(): " + teacher.getSchool());
@@ -54,14 +59,19 @@ public class TestRegistAction implements Action {
 		        StudentDAO sDao = new StudentDAO();
 		        ClassNumDAO cNumDao = new ClassNumDAO();
 
-		        // Schoolオブジェクトを作成
-		        School school = new School();
-		        school.setCd(teacher.getSchool());
 
 		        System.out.println("学校コード: " + school.getCd());
 
 		        // クラス番号一覧を取得
 		        List<String> classNumList = cNumDao.filter(school);
+
+		        List<Integer> testNoList = new ArrayList<>();
+		        for (int i = 1; i <= 10; i++) { // 回数は適宜変更可
+		            testNoList.add(i);
+		        }
+
+
+
 
 		        // 入学年度のパース
 		        if (entYearStr != null && !entYearStr.isEmpty()) {
@@ -77,6 +87,15 @@ public class TestRegistAction implements Action {
 		            isAttend = true;
 		        }
 
+		        String noStr = request.getParameter("f4");
+		        int no = 0;
+		        if (noStr != null && !noStr.isEmpty()) {
+		        	try {
+		        		no = Integer.parseInt(noStr);
+		        	} catch (NumberFormatException e) {
+		        		errors.put("f4", "回数は数値で入力してください");
+		        	}
+		        }
 
 		        // 学生リストの取得ロジック
 		        if (entYear != 0 && !classNum.equals("0")) {
@@ -94,6 +113,8 @@ public class TestRegistAction implements Action {
 		        request.setAttribute("f1", entYear);
 		        request.setAttribute("f2", classNum);
 		        request.setAttribute("f3", isAttendStr);
+		        request.setAttribute("f4", no);                // 選択された回数（選択保持用）
+		        request.setAttribute("test_no_list", testNoList); // セレクトボックスの選択肢
 		        request.setAttribute("students", students);
 		        request.setAttribute("class_num_set", classNumList);
 		        request.setAttribute("ent_year_set", entYearSet);
