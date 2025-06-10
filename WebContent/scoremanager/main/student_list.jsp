@@ -9,6 +9,7 @@
 	<div class="my-2 text-end px-4">
 		<a href="StudentCreate.action">新規登録</a>
 	</div>
+	<a href="${pageContext.request.contextPath}/scoremanager/main/menu.jsp">メニュー</a>
 
 	<form method="get">
 		<div class="row border mx-3 mb-3 py-2 align-items-center rounded"
@@ -76,7 +77,6 @@
 									<c:otherwise>✕</c:otherwise>
 								</c:choose></td>
 							<td><a href="StudentUpdate.action?no=${student.no}">変更</a></td>
-							<td><a href="StudentDelete.action?no=${student.no}">削除</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -88,4 +88,3 @@
 		</c:otherwise>
 	</c:choose>
 </section>
-

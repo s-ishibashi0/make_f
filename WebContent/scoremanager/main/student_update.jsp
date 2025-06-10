@@ -36,7 +36,7 @@
 
   <input type="submit" name="login" value="変更" />
 
-  <a href="/student/list" style="margin-left:10px;">戻る</a>
+  <a href="main/StudentList.action" style="margin-left:10px;">戻る</a>
 
 </form>
 
