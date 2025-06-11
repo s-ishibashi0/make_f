@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <html>
 <head>
-<title>科目削除確認</title>
+<title>得点管理システム</title>
 </head>
 <body>
 <h2>科目削除確認</h2>
