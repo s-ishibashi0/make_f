@@ -1,16 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:import url="../../base.jsp" />
 
 <html>
 <head>
-    <title>科目管理 - 削除完了</title>
+<title>得点管理システム</title>
 </head>
 <body>
-    <h2>科目管理</h2>
+	<h2>科目情報削除</h2>
 
-    <p>科目の削除が完了しました。</p>
+	<p>削除が完了しました。</p>
 
-    <a href="${pageContext.request.contextPath}/scoremanager/main/SubjectList.action">科目一覧へ戻る</a>
+	<a
+		href="${pageContext.request.contextPath}/scoremanager/main/SubjectList.action">科目一覧</a>
 </body>
 </html>

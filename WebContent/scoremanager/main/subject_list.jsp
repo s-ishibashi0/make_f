@@ -6,7 +6,7 @@
 
 <html>
 <head>
-<title>科目管理</title>
+<title>得点管理システム</title>
 </head>
 <body>
 	<h2>科目管理</h2>
@@ -15,13 +15,6 @@
 	<br>
 	<br>
 
-	<!-- 件数チェック表示 -->
-	<c:if test="${empty subjectList}">
-		<p>科目リストは空です</p>
-	</c:if>
-	<c:if test="${not empty subjectList}">
-		<p>科目リスト件数: ${fn:length(subjectList)}</p>
-	</c:if>
 
 	<table border="1">
 		<tr>

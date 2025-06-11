@@ -16,31 +16,41 @@ public class SubjectCreateExecuteAction implements Action {
 
         String cd = request.getParameter("cd");
         String name = request.getParameter("name");
-        String schoolCd = "oom"; // データベースのSCHOOL_CDに合わせて固定
+        String schoolCd = "oom"; // SCHOOL_CDを固定
 
-        if (cd == null || cd.isEmpty() || name == null || name.isEmpty()) {
-            request.setAttribute("errorMsg", "科目コードと科目名は必須です。");
+        // 入力バリデーション
+        if (cd == null || cd.length() != 3 || name == null || name.isEmpty()) {
+            request.setAttribute("errorMsg", "科目コードは3文字で入力してください");
             request.setAttribute("cd", cd);
             request.setAttribute("name", name);
             return "/scoremanager/main/subject_create.jsp";
         }
 
+        // 学校オブジェクトの生成
+        School school = new School();
+        school.setCd(schoolCd);
+
+        SubjectDAO dao = new SubjectDAO();
+
+        // 重複チェック
+        Subject existing = dao.get(cd, school);
+        if (existing != null) {
+            request.setAttribute("errorMsg", "科目コードが重複しています");
+            request.setAttribute("cd", cd);
+            request.setAttribute("name", name);
+            return "/scoremanager/main/subject_create.jsp";
+        }
+
+        // 登録処理
         Subject subject = new Subject();
         subject.setCd(cd);
         subject.setName(name);
-
-        School school = new School();
-        school.setCd(schoolCd);
         subject.setSchool(school);
 
         try {
-            SubjectDAO dao = new SubjectDAO();
             dao.insert(subject);
-
             System.out.println("登録成功: SCHOOL_CD=" + schoolCd + ", CD=" + cd + ", NAME=" + name);
-
             return "/scoremanager/main/subject_create_done.jsp";
-
         } catch (Exception e) {
             request.setAttribute("errorMsg", "登録に失敗しました: " + e.getMessage());
             request.setAttribute("cd", cd);

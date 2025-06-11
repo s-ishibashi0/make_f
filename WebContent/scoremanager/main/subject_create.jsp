@@ -3,11 +3,12 @@
 
 <html>
 <head>
-  <title>科目登録</title>
+  <title>得点管理システム</title>
 </head>
 <body>
   <h2>科目登録</h2>
 
+  <!-- エラーメッセージ表示（空でなければ表示） -->
   <c:if test="${not empty errorMsg}">
     <p style="color:red">${errorMsg}</p>
   </c:if>
@@ -24,6 +25,8 @@
       placeholder="科目コードを入力してください"
       value="${cd != null ? cd : ''}"
       autocomplete="off"
+      pattern=".{3}"
+      title="科目コードは3文字で入力してください"
     >
     <br><br>
 
@@ -44,6 +47,6 @@
   </form>
 
   <br>
-  <a href="${pageContext.request.contextPath}/scoremanager/main/SubjectList.action">科目管理一覧に戻る</a>
+  <a href="${pageContext.request.contextPath}/scoremanager/main/SubjectList.action">戻る</a>
 </body>
 </html>
