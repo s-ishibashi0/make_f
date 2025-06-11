@@ -15,15 +15,12 @@
 <div class = header>
 	<h1>得点管理システム</h1>
 	<%
-    	String loggedInUser = (String) session.getAttribute("userName");
+	    bean.Teacher teacher = (bean.Teacher) session.getAttribute("teacher");
 	%>
-
-	<span>
-    	<%= loggedInUser != null ? loggedInUser +"様" : "" %>
-	</span>
-	<%if (loggedInUser != null) { %>
-		<a href="git/scoremanager/main/logout.jsp">ログアウト</a>
+	<% if (teacher != null) { %>
+	    <a href="Logout.action">ログアウト</a>
 	<% } %>
+
 </div>
 </body>
 </html>
