@@ -12,7 +12,7 @@ public class SubjectDeleteAction implements Action {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String schoolCd = "oom";  // 例: 必要に応じて動的に取得
+        String schoolCd = "oom";
         String code = request.getParameter("code");
 
         if (code == null || code.isEmpty()) {
