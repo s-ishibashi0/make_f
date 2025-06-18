@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import bean.School;
 import bean.Subject;
@@ -88,5 +89,25 @@ public class TestListSubjectDAO extends DAO {
         }
 
         return list;
+    }
+    public void saveScores(String subjectCd, int testNo, Map<String, Integer> scores) throws Exception {
+        Connection conn = new DAO().getConnection();
+
+        String sql = "MERGE INTO TEST (STUDENT_NO, SUBJECT_CD, NO, POINT) " +
+                "KEY (STUDENT_NO, SUBJECT_CD, NO) VALUES (?, ?, ?, ?)";
+
+        PreparedStatement stmt = conn.prepareStatement(sql);
+
+        for (Map.Entry<String, Integer> entry : scores.entrySet()) {
+            stmt.setString(1, entry.getKey());
+            stmt.setString(2, subjectCd);
+            stmt.setInt(3, testNo);
+            stmt.setInt(4, entry.getValue());
+            stmt.addBatch();
+        }
+
+        stmt.executeBatch();
+        stmt.close();
+        conn.close();
     }
 }
