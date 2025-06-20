@@ -33,13 +33,13 @@ public class TestListAction implements Action {
 
         Map<String, String> errors = new HashMap<>();
 
+        // パラメータ取得
         String entYearStr = request.getParameter("f1");
         String classNum = request.getParameter("f2");
         String subjectCd = request.getParameter("f3");
-        String testNoStr = request.getParameter("f4");
+        String studentNo = request.getParameter("f4"); // 学生番号
 
         int entYear = 0;
-        int testNo = 0;
 
         try {
             entYear = Integer.parseInt(entYearStr);
@@ -47,18 +47,42 @@ public class TestListAction implements Action {
             errors.put("f1", "入学年度は数値で入力してください");
         }
 
-        try {
-            testNo = Integer.parseInt(testNoStr);
-        } catch (NumberFormatException e) {
-            errors.put("f4", "回数は数値で入力してください");
+        List<Student> students = new ArrayList<>();
+        List<TestListStudent> tests = new ArrayList<>();
+
+        // 学生一覧取得（入学年度、クラス、科目）
+        StudentDAO sDao = new StudentDAO();
+        if (entYear != 0 && classNum != null && !classNum.equals("0") &&
+            subjectCd != null && !subjectCd.equals("0")) {
+            students = sDao.filterBySubject(school, entYear, classNum, subjectCd);
         }
 
-        List<Student> students = new ArrayList<>();
+        // 学生番号による個別検索
+        if (studentNo != null && !studentNo.isEmpty()) {
+            Test test = new Test();
+            Student student = new Student();
+            student.setNo(studentNo);
+            test.setStudent(student);
 
-        // 学生一覧取得
-        StudentDAO sDao = new StudentDAO();
-        if (entYear != 0 && classNum != null && !classNum.equals("0") && subjectCd != null && !subjectCd.equals("0")) {
-            students = sDao.filterBySubject(school, entYear, classNum, subjectCd);
+            TestListStudentDAO dao = new TestListStudentDAO();
+            tests = dao.filter(test);
+
+        // 学生リストがある場合の検索（1人目のみ）
+        } else if (!students.isEmpty()) {
+            Student student = students.get(0);
+
+            Test test = new Test();
+            test.setStudent(student);
+
+            TestListStudentDAO dao = new TestListStudentDAO();
+            tests = dao.filter(test);
+        }
+
+        // ログ出力
+        System.out.println("検索結果件数: " + tests.size());
+        if (!tests.isEmpty()) {
+            TestListStudent t = tests.get(0);
+            System.out.println("1件目のsubjectName: " + t.getSubjectName());
         }
 
         // 各種リストの作成
@@ -77,39 +101,29 @@ public class TestListAction implements Action {
             testNoList.add(i);
         }
 
-        // Subjectリスト取得
         SubjectDAO subjectDao = new SubjectDAO();
         List<Subject> subjectList = subjectDao.filter(school);
 
-        List<TestListStudent> testList = new ArrayList<>();
-
-        if (!students.isEmpty()) {
-            Student student = students.get(0);
-
-            Test test = new Test();
-            test.setStudent(student);
-            test.setNo(testNo);
-
-            TestListStudentDAO testDao = new TestListStudentDAO();
-            testList = testDao.filter(test);
-
-            System.out.println("成績リスト件数: " + testList.size());
+     // 最後の方に追加
+        if (studentNo != null && !studentNo.isEmpty()) {
+            request.setAttribute("mode", "student");
         } else {
-            // 学生がいなければ空のまま or 必要に応じて別の処理を追加
+            request.setAttribute("mode", "subject");
         }
+
 
         // リクエスト属性の設定
         request.setAttribute("f1", entYear);
         request.setAttribute("f2", classNum);
         request.setAttribute("f3", subjectCd);
-        request.setAttribute("f4", testNo);
+        request.setAttribute("f4", studentNo); // 文字列のまま
         request.setAttribute("students", students);
         request.setAttribute("errors", errors);
         request.setAttribute("ent_year_set", entYearSet);
         request.setAttribute("class_num_set", classNumList);
         request.setAttribute("test_no_list", testNoList);
         request.setAttribute("subjects", subjectList);
-        request.setAttribute("tests", testList);
+        request.setAttribute("tests", tests);
 
         return "/scoremanager/main/test_list.jsp";
     }

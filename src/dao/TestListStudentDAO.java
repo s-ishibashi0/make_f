@@ -43,34 +43,46 @@ public class TestListStudentDAO extends DAO {
     /**
      * student_no で絞り込み成績取得
      */
-    public List<TestListStudent> filter(Test test) throws Exception {
-        List<TestListStudent> list;
+	public List<TestListStudent> filter(Test test) throws Exception {
+	    List<TestListStudent> list = new ArrayList<>();
+	    String studentNoStr = test.getStudent().getNo();
 
-        String sql = baseSql + " WHERE student_no = ?";
+	    // 安全にパース
+	    int studentNo;
+	    try {
+	        studentNo = Integer.parseInt(studentNoStr);
+	    } catch (NumberFormatException e) {
+	        return list; // 空リストを返す
+	    }
 
-        try (
-            Connection conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-        ) {
-            // studentNoは整数型としてセット
-            stmt.setInt(1, Integer.parseInt(test.getStudent().getNo()));
+	    String sql = baseSql + " WHERE student_no = ?";
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                list = postFilter(rs);
-            }
-        }
+	    try (
+	        Connection conn = getConnection();
+	        PreparedStatement stmt = conn.prepareStatement(sql);
+	    ) {
+	        stmt.setInt(1, studentNo);
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            list = postFilter(rs);
+	        }
+	    }
 
-        return list;
-    }
+	    return list;
+	}
+
 
     /**
      * 学校・入学年度・クラス・科目コード・回数で絞り込み成績取得
      */
     public List<TestListStudent> findByFilter(School school, int entYear, String classNum, String subjectCd, int testNo) throws Exception {
         String sql =
-            "SELECT s.ent_year, s.class_num, s.no AS student_no, s.name, t.no, t.point " +
-            "FROM STUDENT s JOIN TEST t ON s.no = t.student_no " +
-            "WHERE s.school_cd = ? AND s.ent_year = ? AND s.class_num = ? AND t.subject_cd = ? AND t.no = ? " +
+            "SELECT s.ent_year, s.class_num, s.no AS student_no, s.name AS student_name, " +
+            "t.no, t.point, t.subject_cd, sub.name AS subject_name " +
+            "FROM STUDENT s " +
+            "JOIN TEST t ON s.no = t.student_no AND s.school_cd = t.school_cd " +
+            "JOIN SUBJECT sub ON t.subject_cd = sub.cd AND t.school_cd = sub.school_cd " +
+            "WHERE s.school_cd = ? AND s.ent_year = ? AND s.class_num = ? " +
+            "AND t.subject_cd = ? AND t.no = ? " +
             "ORDER BY s.no";
 
         List<TestListStudent> list = new ArrayList<>();
@@ -88,9 +100,11 @@ public class TestListStudentDAO extends DAO {
                     test.setEntYear(rs.getInt("ent_year"));
                     test.setClassNum(rs.getString("class_num"));
                     test.setStudentNo(rs.getInt("student_no"));
-                    test.setStudentName(rs.getString("name"));
-                    test.setNum(rs.getInt("no"));        // 回数
-                    test.setPoint(rs.getInt("point"));   // 点数
+                    test.setStudentName(rs.getString("student_name"));
+                    test.setNum(rs.getInt("no"));
+                    test.setPoint(rs.getInt("point"));
+                    test.setSubjectCd(rs.getString("subject_cd"));
+                    test.setSubjectName(rs.getString("subject_name"));
                     list.add(test);
                 }
             }
@@ -98,4 +112,5 @@ public class TestListStudentDAO extends DAO {
 
         return list;
     }
+
 }

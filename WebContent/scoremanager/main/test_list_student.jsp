@@ -16,10 +16,8 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th>入学年度</th>
-				<th>クラス</th>
-				<th>学生番号</th>
-				<th>氏名</th>
+				<th>科目名</th>
+				<th>科目コード</th>
 				<th>回数</th>
 				<th>点数</th>
 			</tr>
@@ -27,15 +25,14 @@
 		<tbody>
 			<c:forEach var="test" items="${tests}">
 				<tr>
-					<td>${test.entYear}</td>
-					<td>${test.classNum}</td>
-					<td>${test.studentNo}</td>
-					<td>${test.studentName}</td>
+					<td>${test.subjectName}</td>
+					<td>${test.subjectCd}</td>
 					<td>${test.num}</td>
 					<td>${test.point}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
+
 	</table>
 
 
