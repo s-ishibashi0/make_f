@@ -9,6 +9,16 @@ public class Student implements Serializable {
 	private String classNum;
 	private boolean isAttend;
 	private School school;
+    private Integer point;  // ← ★これを追加
+
+    // getter/setter を追加
+    public Integer getPoint() {
+        return point;
+    }
+
+    public void setPoint(Integer point) {
+        this.point = point;
+    }
 
 	public String getNo() {
 		return no;

@@ -119,6 +119,8 @@ public class TestRegistAction implements Action {
             testNoList.add(i);
         }
 
+
+
         // リクエスト属性の設定
         request.setAttribute("f1", entYear);
         request.setAttribute("f2", classNum);

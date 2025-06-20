@@ -2,3 +2,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:import url="../../base.jsp" />
 <li>登録が完了しました</li>
+<a href="TestRegist.action">戻る</a>
