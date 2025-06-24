@@ -9,7 +9,8 @@ import dao.TeacherDAO;
 import tool.Action;
 
 public class LoginExecuteAction implements Action {
-    public String execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+    @Override
+	public String execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
         try {
             // フォームから送られたパラメータを取得（IDは文字列として扱う）
             String id = req.getParameter("id");

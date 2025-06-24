@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = {"*.action"})
 public class FrontController extends HttpServlet {
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
+    @Override
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         System.out.println("FrontController!");
 
@@ -63,7 +64,8 @@ public class FrontController extends HttpServlet {
         }
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    @Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doPost(request, response);
     }
